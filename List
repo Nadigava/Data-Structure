@@ -1,0 +1,180 @@
+import java.io.*;
+
+import org.w3c.dom.Node;
+/**
+ * 
+ * @author Estudiante
+ *
+ */
+public class List {
+	
+	Node head = null;
+	
+	public boolean isEmpty()
+	{
+		return head == null ? true : false;
+		/**
+		 * Es otra forma de hacer un condicional (?) = if  (:) = else
+		 * if(head==null)
+		 * 		return true;
+		 * else
+		 * 		return false;
+		 */
+	}
+	public void printList()
+	{
+		BufferedWriter bw = new BufferedWriter (new OutputStreamWriter( System.out ));
+		
+		Node temp = head;
+		
+		try
+		{
+			bw.write("Grades: " + "\t" + " Value: " + "\n");
+			while(temp != null)
+			{
+				bw.write(temp.toString());//para saber cuando esta llamando a imprimir
+				temp = temp. ;
+			}
+			bw.flush();
+		}
+		catch(Exception ex) {ex.printStackTrace();}
+	}
+	
+	public void insertAtBegin(Node newNode)//insert at Begin
+	{
+		newNode.next = head;
+		head = newNode;
+	}
+	public void insertAtEnd(Node newNode)//insert at End
+	{
+		if(isEmpty())
+			head = newNode;
+		else
+		{
+			Node temp = head;
+		
+			while(temp.next != null)
+				temp = temp.next;
+		
+			temp.next = newNode;
+			
+		}
+	}
+	
+	public void deleteAtBegin() 
+	{
+		Node temp = head;
+		head = head.next;
+		temp = null;
+		System.gc();
+	}
+	
+	public void deleteAtEnd(Node tail) 
+	{
+		if(isEmpty());
+			
+		else
+		{			
+		Node pre = head;
+		Node temp = head.next;
+		
+		while(temp.next != null)
+			pre = pre.next;
+			pre.next = tail;
+			tail = null;
+			System.gc();
+		}
+		
+	}
+	
+	public void insertAtIndex(Node newNode, int index)
+	{
+				
+		Node temp = head;
+		
+		for( int i = 0; i < index - 1; index++)
+			temp = temp.next;
+		newNode.next = temp.next;
+		temp.next = newNode;
+	}
+	public void deleteAtIndex(int index)
+	{
+		Node temp = head;
+		Node toDelete;
+		
+		for(int i = 0; i < index - 1; i++ )
+				temp = temp.next;
+		
+		toDelete = temp.next;
+		temp.next = temp.next.next;
+		toDelete = null;
+		System.gc();
+		
+	}
+	
+	
+	public void reverse()
+	{
+		Stack tempStack = new Stack();
+		Node temp = head;
+		
+		while(temp != null)
+		{
+				tempStack.push(temp.clone());
+				temp = temp.next;
+		}
+		head = tempStack.head;
+	}
+	
+	public List quickSort(List unsorted)
+	{
+		if(unsorted.length() <= 1)
+			return unsorted;
+		else
+		{
+			Node pivot = unsorted.head;
+			List less_sublist = new List();
+			List greater_sublist = new List();
+			
+			Node temp = unsorted.head.getNextSibling();
+			while(temp != null)
+			{
+				if(temp.id < pivot.id)
+					less_sublist.insertAtEnd(temp.clone());
+				else
+					greater_sublist.insertAtEnd(temp.cloneNode());
+				
+				temp = temp.next;
+			}
+			
+			less_sublist = quickSort(less_sublist);
+			greater_sublist = quickSort(greater_sublist);
+			
+			pivot.next = greater_sublist.head;
+			less_sublist.insertAtEnd(pivot);
+			return less_sublist;
+		}
+	}
+	
+	
+	public static void main(String[] args) 
+	{
+		// TODO Auto-generated method stub
+		List grades = new List();
+		
+		grades.insertAtBegin(new Node ("Task 1", 3.5));
+		grades.insertAtBegin(new Node ("Quiz 1", 1.5));
+		grades.insertAtEnd(new Node("Test 1", 0.5));
+		grades.insertAtEnd(new Node("Test 2", 1.5));
+		grades.insertAtEnd(new Node("Test 3", 3.5));
+		grades.insertAtEnd(new Node("Test 4", 5.0));
+		grades.deleteAtBegin();
+		//grades.insertAtIndex(new Node("Test 1.5", 2), 2);
+		grades.printList();
+		grades.reverse();
+		grades.printList();
+		
+		
+	}
+
+}
