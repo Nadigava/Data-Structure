@@ -1,0 +1,42 @@
+/**
+ * 
+ * @author Estudiante
+ *
+ */
+public class Node {
+	
+	String grade;
+	double value;
+	
+	Node next = null;
+	
+	/**
+	 * Zero-parameters constructor
+	 */
+	
+	public Node() {}
+	
+	public Node(String grade, double value)
+	{	//grade = " Parcial 1"   value = 1.0
+		this.grade = grade;
+		this.value = value;
+	}
+	
+	@Override
+	public String toString()
+	//Con esto sé si esta imprimiendo
+	{
+		return "Grade: " + this.grade + "\t"
+				+ "Value: " + this.value + "\n";
+		
+	}
+	
+	@Override
+	public Node clone()
+	{
+		Node temp = new Node(this.grade, this.value);
+		return temp;		
+	}
+	
+}
+
